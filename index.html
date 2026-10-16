@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>JRE 範文站</title>
+<title>JRE範文.beta</title>
 <meta name="description" content="JRE 考試風格中英範文：手機優先閱讀，先列表後全文，可調字體與背景。">
 <style>
 :root {
@@ -25,7 +25,14 @@
   --fab-bg: #1a1a1a;
   --fab-ink: #fff;
   --panel-bg: #ffffff;
+  --card-en: #eef7f4;
+  --card-zh: #faf6f0;
+  --card-en-border: #cfe8df;
+  --card-zh-border: #eadfce;
+  --body-en-bg: #f3faf7;
+  --body-zh-bg: #fbf7f1;
 }
+
 [data-theme="dark"] {
   --bg: #0d0d0d;
   --card: #1a1a1a;
@@ -41,7 +48,14 @@
   --fab-bg: #f0f0f0;
   --fab-ink: #0d0d0d;
   --panel-bg: #1f1f1f;
+  --card-en: #14241e;
+  --card-zh: #241c16;
+  --card-en-border: #1e3a30;
+  --card-zh-border: #3a2e24;
+  --body-en-bg: #101c18;
+  --body-zh-bg: #1a1511;
 }
+
 [data-theme="warm"] {
   --bg: #f4ebe0;
   --card: #fff9f2;
@@ -57,7 +71,14 @@
   --fab-bg: #3a2c24;
   --fab-ink: #fff9f2;
   --panel-bg: #fff9f2;
+  --card-en: #e8f2ec;
+  --card-zh: #f8efe4;
+  --card-en-border: #c5ddd0;
+  --card-zh-border: #e5d3bc;
+  --body-en-bg: #eef6f1;
+  --body-zh-bg: #faf3ea;
 }
+
 * { box-sizing: border-box; }
 html, body {
   margin: 0; padding: 0;
@@ -81,24 +102,9 @@ a { color: var(--accent); text-decoration: none; }
   padding: 4px 0 22px;
   border-bottom: 2px solid var(--ink);
 }
-.masthead-top {
-  display: flex; align-items: baseline; justify-content: space-between;
-  gap: 12px; flex-wrap: wrap; margin-bottom: 14px;
-}
-.brand {
-  font-size: .72rem; font-weight: 800; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--masthead);
-}
-.stats {
-  font-size: .78rem; color: var(--muted); font-weight: 600;
-}
 .masthead h1 {
   margin: 0; font-size: 1.75rem; line-height: 1.25;
   font-weight: 800; letter-spacing: -.02em;
-}
-.masthead .dek {
-  margin: 12px 0 0; color: var(--muted); font-size: .95rem;
-  max-width: 34em; line-height: 1.55;
 }
 
 /* —— Feed cards —— */
@@ -111,6 +117,12 @@ a { color: var(--accent); text-decoration: none; }
   border-radius: var(--radius); padding: 22px 20px 18px; margin: 0 0 16px;
   box-shadow: var(--shadow); color: inherit;
   transition: border-color .15s, transform .15s;
+}
+.card.lang-en {
+  background: var(--card-en); border-color: var(--card-en-border);
+}
+.card.lang-zh {
+  background: var(--card-zh); border-color: var(--card-zh-border);
 }
 .card:hover { border-color: var(--accent); }
 .card:active { transform: scale(.995); }
@@ -155,11 +167,36 @@ a { color: var(--accent); text-decoration: none; }
   font-weight: 800; letter-spacing: -.02em;
 }
 .article-head .sub { margin: 10px 0 0; color: var(--muted); font-size: .92rem; }
+.wordcount {
+  display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  margin: 14px 0 0; padding: 8px 14px;
+  background: var(--accent-soft); color: var(--accent);
+  border-radius: 12px; font-size: .95rem; font-weight: 800;
+  letter-spacing: .01em; line-height: 1.35;
+}
+.article-head.lang-en { border-bottom-color: var(--card-en-border); }
+.article-head.lang-zh { border-bottom-color: var(--card-zh-border); }
 
 .block {
   background: var(--card); border: 1px solid var(--line);
   border-radius: var(--radius); padding: 20px 18px; margin: 0 0 16px;
   box-shadow: var(--shadow);
+}
+.block.prompt.lang-en { background: var(--card-en); border-color: var(--card-en-border); }
+.block.prompt.lang-zh { background: var(--card-zh); border-color: var(--card-zh-border); }
+.block.body.lang-en {
+  background: var(--body-en-bg); border-color: var(--card-en-border);
+}
+.block.body.lang-zh,
+.block.translation {
+  background: var(--body-zh-bg); border-color: var(--card-zh-border);
+}
+.block.body.lang-en p,
+.block.body.lang-en {
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;
 }
 .block h2 {
   margin: 0 0 14px; font-size: .78rem; font-weight: 800;
@@ -265,19 +302,14 @@ footer.site {
 <body>
   <div class="wrap">
     <header class="masthead" id="site-masthead">
-      <div class="masthead-top">
-        <span class="brand">JRE Essays · 012</span>
-        <span class="stats" id="masthead-stats"></span>
-      </div>
-      <h1>每日範文</h1>
-      <p class="dek">對齊 JRE 考試風格的中英範文。先讀標題與摘要，再開全文；字體與背景可調，偏好存於本機。</p>
+      <h1>JRE範文.beta</h1>
     </header>
 
     <p class="feed-label" id="feed-label">最新篇章</p>
     <main id="feed" aria-label="文章列表"></main>
     <article id="article" hidden aria-label="文章全文"></article>
 
-    <footer class="site">靜態託管 · 閱讀偏好僅存於瀏覽器</footer>
+    <footer class="site">JRE範文.beta · 靜態託管 · 閱讀偏好僅存於瀏覽器</footer>
   </div>
 
   <button type="button" id="settings-fab" aria-label="開啟閱讀設定" aria-expanded="false" aria-controls="settings-panel">Aa</button>

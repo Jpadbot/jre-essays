@@ -20,7 +20,6 @@
   var panelEl = document.getElementById("settings-panel");
   var overlayEl = document.getElementById("settings-overlay");
   var fontLabel = document.getElementById("font-label");
-  var mastheadStats = document.getElementById("masthead-stats");
   var feedLabel = document.getElementById("feed-label");
 
   function loadPrefs() {
@@ -128,16 +127,30 @@
   }
 
   function updateMasthead(view) {
-    var list = window.JRE_ESSAYS || [];
-    var n = list.length;
-    var latest = list[0] ? list[0].dateLabel : "";
-    if (mastheadStats) {
-      mastheadStats.textContent =
-        n + " 篇" + (latest ? " · 最新 " + latest : "");
-    }
     if (feedLabel) feedLabel.hidden = view !== "feed";
     var mast = document.getElementById("site-masthead");
     if (mast) mast.hidden = view !== "feed";
+  }
+
+  function wordCountLabel(e) {
+    if (e.lang === "en") {
+      var en = e.wordCount || 0;
+      var zh = e.charCount || 0;
+      if (en && zh) return "英文約 " + en + " 詞 · 中譯約 " + zh + " 字";
+      if (en) return "英文約 " + en + " 詞";
+      return "";
+    }
+    var n = e.charCount || 0;
+    return n ? "約 " + n + " 字" : "";
+  }
+
+  function shortCountLabel(e) {
+    if (e.lang === "en") {
+      var en = e.wordCount || 0;
+      return en ? "約 " + en + " 詞" : "";
+    }
+    var n = e.charCount || 0;
+    return n ? "約 " + n + " 字" : "";
   }
 
   function renderFeed() {
@@ -145,8 +158,11 @@
     var html = list
       .map(function (e) {
         var badge = e.lang === "en" ? "英＋中譯" : "中文";
+        var wc = shortCountLabel(e);
         return (
-          '<a class="card" href="#essay/' +
+          '<a class="card lang-' +
+          e.lang +
+          '" href="#essay/' +
           encodeURIComponent(e.id) +
           '">' +
           '<div class="card-meta"><time datetime="' +
@@ -155,7 +171,9 @@
           e.dateLabel +
           '</time><span class="badge">' +
           badge +
-          "</span></div>" +
+          "</span>" +
+          (wc ? '<span class="badge">' + wc + "</span>" : "") +
+          "</div>" +
           "<h2>" +
           e.title +
           "</h2>" +
@@ -171,7 +189,7 @@
     feedEl.hidden = false;
     articleEl.hidden = true;
     articleEl.innerHTML = "";
-    document.title = "JRE 範文站";
+    document.title = "JRE範文.beta";
     updateMasthead("feed");
   }
 
@@ -182,8 +200,9 @@
       return;
     }
     var parts = [];
+    var wc = wordCountLabel(e);
     parts.push('<button type="button" class="back" id="btn-back">← 返回列表</button>');
-    parts.push('<header class="article-head">');
+    parts.push('<header class="article-head lang-' + e.lang + '">');
     parts.push(
       '<div class="card-meta"><time datetime="' +
         e.date +
@@ -197,18 +216,23 @@
         "</span></div>"
     );
     parts.push("<h1>" + e.title + "</h1>");
+    if (wc) parts.push('<p class="wordcount" aria-label="字數統計">' + wc + "</p>");
     if (e.titleEn) parts.push('<p class="sub">' + e.titleEn + "</p>");
     parts.push("</header>");
 
     parts.push(
-      '<section class="block prompt"><h2>' +
+      '<section class="block prompt lang-' +
+        e.lang +
+        '"><h2>' +
         e.promptTitle +
         "</h2>" +
         e.promptHtml +
         "</section>"
     );
     parts.push(
-      '<section class="block body"><h2>' +
+      '<section class="block body lang-' +
+        e.lang +
+        '"><h2>' +
         e.bodyTitle +
         "</h2>" +
         e.bodyHtml +
@@ -216,7 +240,7 @@
     );
     if (e.translationHtml) {
       parts.push(
-        '<section class="block translation"><h2>' +
+        '<section class="block translation lang-zh"><h2>' +
           e.translationTitle +
           "</h2>" +
           e.translationHtml +
@@ -227,7 +251,7 @@
     articleEl.innerHTML = parts.join("");
     articleEl.hidden = false;
     feedEl.hidden = true;
-    document.title = e.title + " · JRE 範文站";
+    document.title = e.title + " · JRE範文.beta";
     updateMasthead("essay");
 
     var back = document.getElementById("btn-back");

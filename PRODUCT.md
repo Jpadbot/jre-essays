@@ -12,3 +12,10 @@
 
 ## 範文來源
 - 2026-10-16 兩篇範文來源為 grok.com Expert（2026-10-16）。
+
+## 如何自己改
+1. 開倉庫：https://github.com/Jpadbot/jre-essays
+2. 改文章：編輯 `essays-data.js`（標題、摘要、`bodyHtml`／`translationHtml`、`wordCount`／`charCount`）
+3. 改首頁標題／樣式：編輯 `index.html` 內嵌 CSS 與 `<h1>`
+4. 改列表／全文顯示邏輯：編輯 `app.js`
+5. 推送到 `main` 後，GitHub Pages 約一兩分鐘更新：https://jpadbot.github.io/jre-essays/
