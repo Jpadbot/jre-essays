@@ -11,11 +11,12 @@
 - 純靜態、可 GitHub Pages 長期託管
 
 ## 範文來源
-- 2026-10-16 兩篇範文來源為 grok.com Expert（2026-10-16）。
+- 初期兩篇（精神健康中心試行、新大牌檔）來源為 grok.com Expert（2026-10-16）。
+- 其後新增篇章採立法會事務委員會討論文件風格（背景—問題—建議—資源／時序—所求決定），英譯中對照；英文範文目標約 1,800–2,200 詞。
 
 ## 如何自己改
 1. 開倉庫：https://github.com/Jpadbot/jre-essays
-2. 改文章：編輯 `essays-data.js`（標題、摘要、`bodyHtml`／`translationHtml`、`wordCount`／`charCount`）
-3. 改首頁標題／樣式：編輯 `index.html` 內嵌 CSS 與 `<h1>`
+2. 改文章：編輯 `essays-data.js`（標題、摘要、`bodyHtml`／`translationHtml`、`wordCount`＝英詞數、`charCount`＝中文字數）
+3. 改首頁標題／樣式：編輯 `index.html` 內嵌 CSS 與 `<h1>`（英文正文窄屏左對齊、寬屏才 justify；標題永不 justify）
 4. 改列表／全文顯示邏輯：編輯 `app.js`
 5. 推送到 `main` 後，GitHub Pages 約一兩分鐘更新：https://jpadbot.github.io/jre-essays/

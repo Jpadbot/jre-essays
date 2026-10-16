@@ -191,12 +191,12 @@ a { color: var(--accent); text-decoration: none; }
 .block.translation {
   background: var(--body-zh-bg); border-color: var(--card-zh-border);
 }
-.block.body.lang-en p,
-.block.body.lang-en {
-  text-align: justify;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-  hyphenate-limit-chars: 6 3 3;
+/* Headings: never justify (avoids "rivers" on narrow screens) */
+.block h1, .block h2, .block h3,
+.article-head h1, .card h2, .masthead h1 {
+  text-align: left;
+  -webkit-hyphens: none;
+  hyphens: none;
 }
 .block h2 {
   margin: 0 0 14px; font-size: .78rem; font-weight: 800;
@@ -208,6 +208,19 @@ a { color: var(--accent); text-decoration: none; }
 .block h3:first-of-type { margin-top: .35em; }
 .block p { margin: 0 0 1em; }
 .block p:last-child { margin-bottom: 0; }
+
+/* English body: left-align on narrow screens; justify only when wide enough */
+.block.body.lang-en p {
+  text-align: left;
+}
+@media (min-width: 640px) {
+  .block.body.lang-en p {
+    text-align: justify;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    hyphenate-limit-chars: 6 3 3;
+  }
+}
 .meta-line { color: var(--muted); font-size: .9rem; margin-bottom: 1.1em !important; }
 .zh-note { color: var(--muted); font-size: .9rem; }
 

@@ -229,10 +229,13 @@
         e.promptHtml +
         "</section>"
     );
+    var bodyLangAttr = e.lang === "en" ? ' lang="en"' : ' lang="zh-Hant"';
     parts.push(
       '<section class="block body lang-' +
         e.lang +
-        '"><h2>' +
+        '"' +
+        bodyLangAttr +
+        "><h2>" +
         e.bodyTitle +
         "</h2>" +
         e.bodyHtml +
@@ -240,7 +243,7 @@
     );
     if (e.translationHtml) {
       parts.push(
-        '<section class="block translation lang-zh"><h2>' +
+        '<section class="block translation lang-zh" lang="zh-Hant"><h2>' +
           e.translationTitle +
           "</h2>" +
           e.translationHtml +
